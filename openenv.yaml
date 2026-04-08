@@ -1,0 +1,6 @@
+name: email-triage-env
+version: 1.0
+
+tasks:
+  - name: email_task
+    description: Classify email and generate reply
