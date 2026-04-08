@@ -1,0 +1,15 @@
+[project]
+name = "email-triage-env"
+version = "0.1.0"
+description = "Email Triage AI Environment"
+authors = [
+  {name = "Sai Teja"}
+]
+dependencies = [
+  "fastapi",
+  "uvicorn",
+  "pydantic"
+]
+
+[tool.openenv]
+entrypoint = "app.py"
