@@ -1,31 +1,29 @@
+from fastapi import FastAPI
+from pydantic import BaseModel
 from env import EmailEnv
 
+app = FastAPI()
 env = EmailEnv()
-obs = env.reset()
 
-# simple rule-based agent
-def agent(obs):
-    text = obs["email_text"].lower()
+class Action(BaseModel):
+    label: str
+    reply: str
 
-    if "meeting" in text:
-        return {
-            "label": "important",
-            "reply": "Sure, I will attend the meeting."
-        }
-    elif "lottery" in text:
-        return {
-            "label": "spam",
-            "reply": "This looks like spam."
-        }
-    else:
-        return {
-            "label": "normal",
-            "reply": "Sounds good!"
-        }
+@app.post("/reset")
+@app.get("/reset")   # <-- ADD THIS LINE (IMPORTANT)
+def reset():
+    obs = env.reset()
+    return {"observation": obs}
 
-action = agent(obs)
-next_obs, reward, done, _ = env.step(action)
+@app.post("/step")
+@app.get("/step")    # <-- ADD THIS LINE (IMPORTANT)
+def step(action: Action = None):
+    if action is None:
+        return {"error": "No action provided"}
+    
+    reward = env.step(action.dict())
+    return {"reward": reward}
 
-print("Observation:", obs)
-print("Action:", action)
-print("Reward:", reward)
+@app.get("/")
+def home():
+    return {"message": "Email Triage AI Environment Running"}
