@@ -10,20 +10,19 @@ class Action(BaseModel):
     reply: str
 
 @app.post("/reset")
-@app.get("/reset")   # <-- ADD THIS LINE (IMPORTANT)
 def reset():
     obs = env.reset()
-    return {"observation": obs}
+    return {
+        "observation": obs   # IMPORTANT KEY NAME
+    }
 
 @app.post("/step")
-@app.get("/step")    # <-- ADD THIS LINE (IMPORTANT)
-def step(action: Action = None):
-    if action is None:
-        return {"error": "No action provided"}
-    
+def step(action: Action):
     reward = env.step(action.dict())
-    return {"reward": reward}
+    return {
+        "reward": reward
+    }
 
 @app.get("/")
 def home():
-    return {"message": "Email Triage AI Environment Running"}
+    return {"status": "running"}
