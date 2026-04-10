@@ -4,6 +4,13 @@ version: 1.0
 tasks:
   - name: easy_task
     description: classify simple email
+    dataset:
+      type: inline
+      data:
+        - input: "Meeting at 5 PM, please attend"
+          expected:
+            label: "important"
+            reply: "Sure, I will attend the meeting."
     grader:
       type: python
       path: grader.py
@@ -11,6 +18,13 @@ tasks:
 
   - name: medium_task
     description: classify and reply email
+    dataset:
+      type: inline
+      data:
+        - input: "Congratulations! You won a lottery"
+          expected:
+            label: "spam"
+            reply: "This looks like spam."
     grader:
       type: python
       path: grader.py
@@ -18,6 +32,13 @@ tasks:
 
   - name: hard_task
     description: complex email understanding
+    dataset:
+      type: inline
+      data:
+        - input: "Lunch tomorrow?"
+          expected:
+            label: "normal"
+            reply: "Sounds good!"
     grader:
       type: python
       path: grader.py
