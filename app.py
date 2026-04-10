@@ -12,22 +12,17 @@ class Action(BaseModel):
 @app.post("/reset")
 def reset():
     obs = env.reset()
-    return {
-        "observation": obs
-    }
+    return {"observation": obs}
 
 @app.post("/step")
 def step(action: Action):
     reward = env.step(action.dict())
-    return {
-        "reward": reward
-    }
+    return {"reward": reward}
 
 @app.get("/")
 def home():
     return {"status": "running"}
 
-# IMPORTANT: entrypoint function
 def main():
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=7860)
