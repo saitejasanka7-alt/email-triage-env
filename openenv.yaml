@@ -1,0 +1,12 @@
+name: email_env
+version: "1.0"
+
+tasks:
+  - id: task1
+    grader: grade_easy
+
+  - id: task2
+    grader: grade_medium
+
+  - id: task3
+    grader: grade_hard
