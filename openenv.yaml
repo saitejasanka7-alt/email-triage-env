@@ -4,12 +4,12 @@ version: 1.0
 tasks:
   - name: easy_task
     description: classify simple email
-    grader: grader:grade_easy
+    grader: grader.py:grade_easy
 
   - name: medium_task
     description: classify and reply email
-    grader: grader:grade_medium
+    grader: grader.py:grade_medium
 
   - name: hard_task
     description: complex email understanding
-    grader: grader:grade_hard
+    grader: grader.py:grade_hard
