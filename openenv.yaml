@@ -3,22 +3,5 @@ version: 1.0
 
 tasks:
   - name: easy_task
-    type: single
-    grader:
-      type: python
-      path: grader.py
-      function: grade_easy
-
   - name: medium_task
-    type: single
-    grader:
-      type: python
-      path: grader.py
-      function: grade_medium
-
   - name: hard_task
-    type: single
-    grader:
-      type: python
-      path: grader.py
-      function: grade_hard
