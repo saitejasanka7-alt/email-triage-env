@@ -1,6 +1,28 @@
+import os
+from openai import OpenAI
 from env import EmailEnv
 
 env = EmailEnv()
+
+def call_llm(text):
+    try:
+        client = OpenAI(
+            api_key=os.environ.get("API_KEY"),
+            base_url=os.environ.get("API_BASE_URL")
+        )
+
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "Classify email and suggest reply."},
+                {"role": "user", "content": text}
+            ]
+        )
+
+        return response.choices[0].message.content
+
+    except Exception as e:
+        return "fallback"
 
 try:
     print("[START] task=email_triage", flush=True)
@@ -8,7 +30,9 @@ try:
     obs = env.reset()
     text = obs["text"]
 
-    # simple rule-based logic (NO API)
+    llm_output = call_llm(text)
+
+    # fallback logic if LLM fails
     if "meeting" in text.lower():
         action = {"label": "important", "reply": "Sure, I will attend the meeting."}
     elif "lottery" in text.lower():
