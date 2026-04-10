@@ -25,12 +25,18 @@ class EmailEnv:
         return {"text": self.current["text"]}
 
     def step(self, action):
-        reward = 0
+        score = 0.0
 
         if action["label"] == self.current["label"]:
-            reward += 0.5
+            score += 0.5
 
         if action["reply"] == self.current["reply"]:
-            reward += 0.5
+            score += 0.4
 
-        return reward
+        # ensure score strictly between (0,1)
+        if score == 0:
+            score = 0.1
+        elif score >= 0.9:
+            score = 0.9
+
+        return score
