@@ -1,4 +1,5 @@
 import random
+from grader import grade_easy, grade_medium, grade_hard
 
 class EmailEnv:
     def __init__(self):
@@ -22,21 +23,29 @@ class EmailEnv:
 
     def reset(self):
         self.current = random.choice(self.emails)
-        return {"text": self.current["text"]}
+
+        # randomly assign task
+        self.task = random.choice(["easy", "medium", "hard"])
+
+        return {
+            "text": self.current["text"],
+            "task": self.task
+        }
 
     def step(self, action):
-        score = 0.0
+        expected = self.current
 
-        if action["label"] == self.current["label"]:
-            score += 0.5
-
-        if action["reply"] == self.current["reply"]:
-            score += 0.4
+        if self.task == "easy":
+            score = grade_easy(action, expected)
+        elif self.task == "medium":
+            score = grade_medium(action, expected)
+        else:
+            score = grade_hard(action, expected)
 
         # ensure score strictly between (0,1)
-        if score == 0:
+        if score <= 0:
             score = 0.1
-        elif score >= 0.9:
+        elif score >= 1:
             score = 0.9
 
         return score
