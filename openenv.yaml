@@ -1,15 +1,21 @@
 name: email-triage-env
-version: 1.0
+version: "1.0"
 
 tasks:
-  easy_task:
-    description: classify simple email
-    grader: grader.py:grade_easy
+  - name: easy_task
+    grader:
+      type: python
+      path: grader.py
+      function: grade_easy
 
-  medium_task:
-    description: classify and reply email
-    grader: grader.py:grade_medium
+  - name: medium_task
+    grader:
+      type: python
+      path: grader.py
+      function: grade_medium
 
-  hard_task:
-    description: complex email understanding
-    grader: grader.py:grade_hard
+  - name: hard_task
+    grader:
+      type: python
+      path: grader.py
+      function: grade_hard
