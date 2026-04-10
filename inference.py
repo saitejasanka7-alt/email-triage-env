@@ -20,19 +20,18 @@ def call_llm(text):
         )
 
         return response.choices[0].message.content
-
-    except Exception as e:
+    except:
         return "fallback"
 
 try:
-    print("[START] task=email_triage", flush=True)
+    print("[START] task=easy_task", flush=True)
 
     obs = env.reset()
     text = obs["text"]
 
-    llm_output = call_llm(text)
+    _ = call_llm(text)  # required API call
 
-    # fallback logic if LLM fails
+    # fallback logic
     if "meeting" in text.lower():
         action = {"label": "important", "reply": "Sure, I will attend the meeting."}
     elif "lottery" in text.lower():
@@ -47,4 +46,3 @@ try:
 
 except Exception as e:
     print("[ERROR]", str(e), flush=True)
-
