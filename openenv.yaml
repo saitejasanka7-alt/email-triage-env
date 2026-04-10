@@ -2,5 +2,14 @@ name: email-triage-env
 version: 1.0
 
 tasks:
-  - name: email_task
-    description: Classify email and generate reply
+  - name: easy_task
+    description: classify simple email
+    grader: grader:grade_easy
+
+  - name: medium_task
+    description: classify and reply email
+    grader: grader:grade_medium
+
+  - name: hard_task
+    description: complex email understanding
+    grader: grader:grade_hard
