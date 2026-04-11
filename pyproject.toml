@@ -18,4 +18,4 @@ server = "app:main"
 
 [tool.openenv]
 entrypoint = "app.py"
-grader = "grader.py"
+grader = "grader"
