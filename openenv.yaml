@@ -2,11 +2,11 @@ name: email-triage-env
 version: "1.0"
 
 tasks:
-  easy_task:
+  - name: easy_task
     grader: grade_easy
 
-  medium_task:
+  - name: medium_task
     grader: grade_medium
 
-  hard_task:
+  - name: hard_task
     grader: grade_hard
