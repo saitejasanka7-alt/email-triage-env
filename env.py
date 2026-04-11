@@ -1,9 +1,41 @@
+import random
+
 class EmailEnv:
     def __init__(self):
-        self.tasks = ["easy_task", "medium_task", "hard_task"]
+        self.emails = [
+            {
+                "text": "Meeting at 5 PM, please attend",
+                "label": "important",
+                "reply": "Sure, I will attend the meeting."
+            },
+            {
+                "text": "Congratulations! You won a lottery",
+                "label": "spam",
+                "reply": "This looks like spam."
+            },
+            {
+                "text": "Can you send the report by tonight?",
+                "label": "important",
+                "reply": "Sure, I will send the report tonight."
+            },
+            {
+                "text": "Lunch tomorrow?",
+                "label": "normal",
+                "reply": "Sounds good!"
+            }
+        ]
 
     def reset(self):
-        return {"text": "Sample email"}
+        self.current = random.choice(self.emails)
+        return {"text": self.current["text"]}
 
     def step(self, action):
-        return 0.5
+        reward = 0.0
+
+        if action["label"] == self.current["label"]:
+            reward += 0.5
+
+        if action["reply"] == self.current["reply"]:
+            reward += 0.5
+
+        return reward
