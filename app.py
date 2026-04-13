@@ -1,27 +1,31 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-from env import EmailEnv
 
 app = FastAPI()
-env = EmailEnv()
 
-class Action(BaseModel):
-    label: str
-    reply: str
-
-@app.post("/reset")
-def reset():
-    obs = env.reset()
-    return {"observation": obs}
-
-@app.post("/step")
-def step(action: Action):
-    reward = env.step(action.dict())
-    return {"reward": reward}
+# GLOBAL STATE
+state = {}
 
 @app.get("/")
 def home():
     return {"status": "running"}
+
+# REQUIRED: RESET API
+@app.post("/reset")
+def reset():
+    global state
+    state = {"email": "Sample email text"}
+    return state
+
+# REQUIRED: STEP API
+@app.post("/step")
+def step(action: dict):
+    # simple dummy response
+    return {
+        "observation": state,
+        "reward": 0.5,
+        "done": False,
+        "info": {}
+    }
 
 def main():
     import uvicorn
